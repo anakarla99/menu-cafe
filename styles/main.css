@@ -1,0 +1,131 @@
+.menu-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5em;
+    flex-wrap: wrap;
+}
+
+.header {
+    background-color: #f8f8f8;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Lobster', sans-serif;
+}
+
+.menu-nav li {
+    margin-right: 4em;
+    margin-left: 4em;
+    margin-top: 3em;
+    font-size: 18px;
+    font-family: 'Lobster', sans-serif;
+    font-weight: 700;
+}
+
+.menu-nav__link {
+    color: #222;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.menu-nav__link.color-primary {
+    padding-bottom: 2px;
+    border-bottom: 2px solid #c54d63;
+}
+
+.menu {
+    max-width: 80%;
+    width: 80%;
+    margin: auto;
+}
+
+.menu-tab {
+    display: none;
+    margin: 4em 0;
+}
+
+.menu-tab:first-of-type {
+    display: block;
+}
+
+.menu-tab>div {
+    display: flex;
+}
+
+.content {
+    display: flex;
+}
+
+@media(max-width: 850px) {
+    .menu-tab>div {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.menu-list-item {
+    margin-bottom: 1em;
+}
+
+@font-face {
+    font-family: 'Abraham Lincoln';
+    src: url('../fonts/AbrahamLincoln.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.menu-list-item__title {
+    font-weight: 500;
+    font-size: 20px;
+    font-family: 'Abraham Lincoln';
+}
+
+@font-face {
+    font-family: 'Futura';
+    src: url('../fonts/FuturaCyrillicLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.menu-list-item sup {
+    color: #575757;
+    margin-left: 2px;
+    font-family: "Abraham Lincoln";
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.menu-list-item__desc {
+    color: #575757;
+    max-width: 50%;
+    font-size: 14px;
+    font-style: italic;
+    font-family: 'Futura', sans-serif;
+}
+
+.menu-list-item__price {
+    flex: 1 0 auto;
+    font-family: 'Abraham Lincoln', sans-serif;
+}
+
+.menu-list-item__dots::before {
+    display: block;
+    overflow: hidden;
+    content: "___________________________ _";
+    height: 2em;
+    padding: 0 6px;
+    word-break: break-word;
+    float: right;
+}
+
+.diet-options {
+    text-align: center;
+    font-size: 14px;
+    color: #575757;
+    font-weight: 500;
+    font-family: 'Lobster', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
