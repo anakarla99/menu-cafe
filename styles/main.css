@@ -6,10 +6,12 @@
 }
 
 .header {
-    background-color: #f8f8f8;
+    /*background-color: #f8f8f8;*/
     padding: 20px;
     text-align: center;
+    background-image: url(img/pattern1.svg);
     font-family: 'Lobster', sans-serif;
+    background-size: cover;
 }
 
 .menu-nav li {
