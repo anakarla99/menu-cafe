@@ -14,6 +14,25 @@ $(document).ready(function() {
     fetch('https://sheetdb.io/api/v1/9c1zjw7nci6sj')
         .then(response => response.json())
         .then(data => {
+
+            const menuNames = [...new Set(data.map(item => item.menu))];
+
+            const $menuNav = $('.menu-nav');
+            const $menuSection = $('.menu');
+            // Crear las pestañas del menú
+            menuNames.forEach(menu => {
+                    const menuId = menu;
+                    $menuNav.append(
+                        `<li><a href="#${menuId}" class="menu-nav__link menu-link-js">${menu}</a></li>`
+                );
+
+                $menuSection.append(
+                    `<div class="menu-tab menu-tab-js" id="${menuId}">
+                    <div><ul class="menu-list"></ul></div>
+                    </div>`
+                );
+            });
+
             // Agrupar items por categoría (menu)
             const groupedData = {};
             data.forEach(item => {
@@ -26,7 +45,8 @@ $(document).ready(function() {
             // Para cada categoría, agrega los items al <ul> correspondiente
             for (const [category, items] of Object.entries(groupedData)) {
                 // Busca el <ul> dentro del div con id igual a la categoría
-                const menuTab = document.getElementById(category);
+                const menuId = category;
+                const menuTab = document.getElementById(menuId);
                 if (!menuTab) continue; // Si no existe, salta
 
                 const ul = menuTab.querySelector('ul.menu-list');
