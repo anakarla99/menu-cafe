@@ -1,40 +1,23 @@
 $(document).ready(function() {
     // Manejo de clicks en los enlaces del menú
-    $(document).on('click', '.menu-link-js', function(e) {
-        e.preventDefault();
-        var $self = $(this);
-        $('.menu-link-js').removeClass('color-primary');
-        $self.addClass('color-primary');
-        var target = $(this).attr('href');
-        $('.menu-tab-js:not(.menu-tab-static)').hide();
-        $(target).fadeIn();
-    });
+    //$(document).on('click', '.menu-link-js', function(e) {
+    //    e.preventDefault();
+    //    var $self = $(this);
+    //    $('.menu-link-js').removeClass('color-primary');
+    //    $self.addClass('color-primary');
+    //    var target = $(this).attr('href');
+    //    $('.menu-tab-js:not(.menu-tab-static)').hide();
+    //    $(target).fadeIn();
+    //});
+
+    let groupedData = {};
 
     // Carga datos de Google Sheets
     fetch('https://sheetdb.io/api/v1/9c1zjw7nci6sj')
         .then(response => response.json())
         .then(data => {
 
-            const menuNames = [...new Set(data.map(item => item.menu))];
-
-            const $menuNav = $('.menu-nav');
-            const $menuSection = $('.menu');
-            // Crear las pestañas del menú
-            menuNames.forEach(menu => {
-                    const menuId = menu;
-                    $menuNav.append(
-                        `<li><a href="#${menuId}" class="menu-nav__link menu-link-js">${menu}</a></li>`
-                );
-
-                $menuSection.append(
-                    `<div class="menu-tab menu-tab-js" id="${menuId}">
-                    <div><ul class="menu-list"></ul></div>
-                    </div>`
-                );
-            });
-
-            // Agrupar items por categoría (menu)
-            const groupedData = {};
+            groupedData ={};
             data.forEach(item => {
                 if (!groupedData[item.menu]) {
                     groupedData[item.menu] = [];
@@ -42,30 +25,53 @@ $(document).ready(function() {
                 groupedData[item.menu].push(item);
             });
 
-            // Para cada categoría, agrega los items al <ul> correspondiente
-            for (const [category, items] of Object.entries(groupedData)) {
-                // Busca el <ul> dentro del div con id igual a la categoría
-                const menuId = category;
-                const menuTab = document.getElementById(menuId);
-                if (!menuTab) continue; // Si no existe, salta
+            //const menuNames = [...new Set(data.map(item => item.menu))];
 
-                const ul = menuTab.querySelector('ul.menu-list');
-                if (!ul) continue;
+            const $menuNav = $('.menu-nav');
+            //const $menuSection = $('.menu');
+            $menuNav.empty();
+            Object.keys(groupedData).forEach((menu, idx) => {
+                $menuNav.append(
+                     `<li><a href="#${menu}" class="menu-nav__link menu-link-js" data-menu="${menu}">${menu}</a></li>`
+                );
+                //$menuSection.append(
+                //    `<div class="menu-tab menu-tab-js" id="${menuId}">
+                //    <div><ul class="menu-list"></ul></div>
+                //    </div>`
+                //);
+            });
 
-                items.forEach(item => {
-                    const li = document.createElement('li');
-                    li.className = 'menu-list-item';
-                    li.innerHTML = `
+            if (Object.keys(groupedData).length > 0) {
+                showMenu(Object.keys(groupedData)[0]);
+                $('.menu-nav__link').first().addClass('color-primary');
+            }
+        })
+        .catch(error => console.error("Error:", error));
+
+    $(document).on('click', '.menu-link-js', function(e) {
+        e.preventDefault();
+        $('.menu-link-js').removeClass('color-primary');
+        $(this).addClass('color-primary');
+        const menu = $(this).data('menu');
+        showMenu(menu);
+    });
+
+    function showMenu(menu) {
+        $('.menu-title').text(menu);
+        const items = groupedData[menu] || [];
+        const $menuItems = $('.menu-items');
+        $menuItems.empty();
+        items.forEach(item => {
+            $menuItems.append(`
+                <div class="menu-list-item">
                     <h4 class="menu-list-item__title">${item.title}</h4>
                     <div class="content">
                         <span class="menu-list-item__desc">${item.desc || ''}</span>
                         <span class="menu-list-item__dots"></span>
                         <span class="menu-list-item__price">${item.price ? item.price + ' CUP' : ''}</span>
                     </div>
-                `;
-                    ul.appendChild(li);
-                });
-            }
-        })
-        .catch(error => console.error("Error:", error));
+                </div>
+            `);
+        });
+    }
 });
