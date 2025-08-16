@@ -1,15 +1,25 @@
+/* Layout para que el menú quede totalmente a la izquierda */
 .menu.layout {
-  display: flex;
+    display: flex;
+    width: 100vw;
+    margin: 0;
+    max-width: none;
 }
 .menu-sidebar {
-  width: 220px;
-  min-width: 180px;
-  background: #f8f8f8;
-  padding: 1rem 0.5rem;
+    width: 220px;
+    min-width: 180px;
+    background: #f8f8f8;
+    padding: 1rem 0.5rem;
+    height: 100vh;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    left: 0;
+    top: 0;
 }
 .menu-content {
-  flex: 1;
-  padding: 2rem;
+    flex: 1;
+    padding: 2rem;
 }
 .menu-title {
   text-align: center;
@@ -40,24 +50,21 @@
 }
 
 .menu-nav li {
-    margin-right: 4em;
-    margin-left: 4em;
-    margin-top: 3em;
+    margin: 0;
     font-size: 18px;
     font-family: 'Lobster', sans-serif;
     font-weight: 700;
+    text-align: left;
 }
 
 .menu-nav__link.color-primary {
+    display: inline-block;
     padding-bottom: 2px;
     border-bottom: 2px solid #c54d63;
+    margin: 0 auto;
 }
 
-.menu {
-    max-width: 80%;
-    width: 80%;
-    margin: auto;
-}
+
 
 .menu-tab {
     display: none;
