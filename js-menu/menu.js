@@ -17,7 +17,7 @@ $(document).ready(function() {
         .then(response => response.json())
         .then(data => {
 
-            groupedData ={};
+            groupedData = {};
             data.forEach(item => {
                 if (!groupedData[item.menu]) {
                     groupedData[item.menu] = [];
@@ -32,7 +32,7 @@ $(document).ready(function() {
             $menuNav.empty();
             Object.keys(groupedData).forEach((menu, idx) => {
                 $menuNav.append(
-                     `<li><a href="#${menu}" class="menu-nav__link menu-link-js" data-menu="${menu}">${menu}</a></li>`
+                    `<li><a href="#${menu}" class="menu-nav__link menu-link-js" data-menu="${menu}">${menu}</a></li>`
                 );
                 //$menuSection.append(
                 //    `<div class="menu-tab menu-tab-js" id="${menuId}">
@@ -74,4 +74,17 @@ $(document).ready(function() {
             `);
         });
     }
+    // Botón hamburguesa para abrir/cerrar menú lateral en móvil
+    $('.menu-toggle').on('click', function() {
+        $('.menu-sidebar').toggleClass('open');
+    });
+    // Opcional: cerrar el menú al hacer clic fuera en móvil
+    $(document).on('click', function(e) {
+        if (
+            $('.menu-sidebar').hasClass('open') &&
+            !$(e.target).closest('.menu-sidebar, .menu-toggle').length
+        ) {
+            $('.menu-sidebar').removeClass('open');
+        }
+    });
 });
