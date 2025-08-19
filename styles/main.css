@@ -273,8 +273,4 @@
     .menu-title {
         white-space: normal;
     }
-    .title-line::after {
-        top: 3px;
-        /* Menos espacio en móviles */
-    }
 }
