@@ -74,6 +74,7 @@ $(document).ready(function() {
             `);
         });
     }
+
     // Botón hamburguesa para abrir/cerrar menú lateral en móvil
     $('.menu-toggle').on('click', function() {
         $('.menu-sidebar').toggleClass('open');

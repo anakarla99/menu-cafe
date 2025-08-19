@@ -7,6 +7,43 @@
     max-width: none;
 }
 
+.menu-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0 3rem;
+    width: 100%;
+}
+
+.title-line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: rgba(17, 30, 108);
+    margin: 0 1rem;
+    position: relative;
+}
+
+.title-line::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    /* Espacio entre las dos líneas */
+    left: 0;
+    right: 0;
+    height: 4px;
+    /* Línea inferior más gruesa */
+    background-color: rgba(17, 30, 108);
+}
+
+.menu-title {
+    text-align: center;
+    margin: 0;
+    font-size: 2rem;
+    color: rgba(17, 30, 108);
+    font-family: 'Lobster', sans-serif;
+    white-space: nowrap;
+}
+
 
 /*.menu-sidebar {
     width: 135px;
@@ -26,13 +63,14 @@
     padding: 2rem;
     /*background-color: rgb(214, 227, 255);*/
 
-.menu-title {
+
+/*.menu-title {
     text-align: center;
     margin-bottom: 1.5rem;
     font-size: 2rem;
     color: rgba(17, 30, 108);
     font-family: 'Lobster', sans-serif;
-}
+} */
 
 .menu-nav {
     list-style: none;
@@ -218,5 +256,25 @@
     }
     .menu-sidebar.open~.menu-content {
         margin-left: 180px;
+    }
+}
+
+
+/* Ajustes responsivos para el título con líneas */
+
+@media (max-width: 600px) {
+    .menu-title-container {
+        flex-direction: column;
+    }
+    .title-line {
+        width: 60%;
+        margin: 0.5rem 0;
+    }
+    .menu-title {
+        white-space: normal;
+    }
+    .title-line::after {
+        top: 3px;
+        /* Menos espacio en móviles */
     }
 }
