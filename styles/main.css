@@ -1,10 +1,12 @@
 /* Layout para que el menú quede totalmente a la izquierda */
+
 .menu.layout {
     display: flex;
     width: 100vw;
     margin: 0;
     max-width: none;
 }
+
 .menu-sidebar {
     width: 135px;
     min-width: 120px;
@@ -17,27 +19,32 @@
     left: 0;
     top: 0;
 }
+
 .menu-content {
     flex: 1;
     padding: 2rem;
 }
+
 .menu-title {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: rgba(56, 20, 18);
+    font-family: 'Lobster', sans-serif;
 }
+
 .menu-nav {
     list-style: none;
     padding: 0;
 }
+
 .menu-nav__link {
     display: block;
     padding: 0.7rem 1rem;
-    color: #333;
     text-decoration: none;
     border-radius: 4px;
     margin-bottom: 0.3rem;
-
+    color: rgba(56, 20, 18);
 }
 
 .header {
@@ -47,6 +54,8 @@
     background-image: url(img/pattern1.svg);
     font-family: 'Lobster', sans-serif;
     background-size: cover;
+    color: rgba(56, 20, 18);
+    text-shadow: 2px 2px rgb(108, 56, 23);
 }
 
 .menu-nav li {
@@ -55,16 +64,15 @@
     font-family: 'Lobster', sans-serif;
     font-weight: 700;
     text-align: left;
+    color: rgba(56, 20, 18);
 }
 
 .menu-nav__link.color-primary {
     display: inline-block;
     padding-bottom: 2px;
-    border-bottom: 2px solid #c54d63;
+    border-bottom: 2px solid rgb(108, 56, 23);
     margin: 0 auto;
 }
-
-
 
 .menu-tab {
     display: none;
