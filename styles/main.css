@@ -254,15 +254,15 @@
     }
     .menu-sidebar {
         position: fixed;
-        left: -200px;
+        left: -150px;
         top: 0;
         height: 100vh;
-        width: 180px;
+        width: 130px;
         background: rgb(167, 179, 230);
         box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
         transition: left 0.3s;
         z-index: 1000;
-        padding-top: 80px; /* Ajusta según la altura real de tu header */
+        padding-top: 100px; /* Ajusta según la altura real de tu header */
     }
     .menu-sidebar.open {
         left: 0;
@@ -280,9 +280,9 @@
 /* Ajustes responsivos para el título con líneas */
 
 @media (max-width: 600px) {
-    .menu-title-container {
+    /*.menu-title-container {
         flex-direction: column;
-    }
+    }*/
     .title-line {
         width: 60%;
         margin: 0.5rem 0;
