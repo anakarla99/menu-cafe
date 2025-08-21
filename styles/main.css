@@ -254,7 +254,7 @@
     }
     .menu-sidebar {
         position: fixed;
-        left: -70px;
+        left: -150px;
         top: 0;
         height: 100vh;
         width: 130px;
