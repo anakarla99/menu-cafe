@@ -299,3 +299,44 @@ body {
     height: 100%;
     background-color: rgb(237, 238, 245);
 }
+
+.footer {
+    background-image: url(img/pattern2.svg);
+    background-size: cover;
+    background-color: rgb(237, 238, 245);
+    text-align: center;
+    padding: 20px 0;
+    /* Igual que .header */
+    font-family: 'Lobster', sans-serif;
+    min-height: 60px;
+    /* Ajusta la altura según tu header */
+}
+
+.footer__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.footer__image {
+    max-height: 48px;
+    /* Ajusta según el tamaño que desees */
+    max-width: 90vw;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* Responsive: igual que header */
+
+@media (max-width: 600px) {
+    .footer {
+        padding: 14px 0;
+        min-height: 40px;
+    }
+    .footer__image {
+        max-height: 32px;
+    }
+}
