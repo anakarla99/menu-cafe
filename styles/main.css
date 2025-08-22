@@ -337,6 +337,10 @@ body {
         min-height: 40px;
     }
     .footer__image {
-        max-height: 32px;
+        max-height: 300px; /* Aumenté de 48px a 70px */
+        max-width: 320vw;
+        height: 100px;
+        display: block;
+        margin: 0 auto;
     }
 }
