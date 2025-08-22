@@ -45,7 +45,8 @@
     white-space: nowrap;
     flex-shrink: 0;
     padding: 0 1rem;
-    background: #fff; /* Opcional: para que el título no se mezcle con la línea */
+    background: #fff;
+    /* Opcional: para que el título no se mezcle con la línea */
     z-index: 1;
 }
 
@@ -74,6 +75,7 @@
     min-height: 100vh;
     box-sizing: border-box;
 }
+
 
 /*.menu-title {
     text-align: center;
@@ -110,6 +112,7 @@
     background-size: cover;
     color: rgba(17, 30, 108);
     text-shadow: 2px 2px rgb(99, 117, 209);
+    background-color: rgb(237, 238, 245);
 }
 
 .menu-nav li {
@@ -258,11 +261,12 @@
         top: 0;
         height: 100vh;
         width: 130px;
-        background: rgb(167, 179, 230);
+        background: rgb(180, 193, 248);
         box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
         transition: left 0.3s;
         z-index: 1000;
-        padding-top: 100px; /* Ajusta según la altura real de tu header */
+        padding-top: 100px;
+        /* Ajusta según la altura real de tu header */
     }
     .menu-sidebar.open {
         left: 0;
@@ -290,12 +294,4 @@
     .menu-title {
         white-space: normal;
     }
-}
-.menu-items {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
 }
