@@ -13,7 +13,7 @@ $(document).ready(function() {
     let groupedData = {};
 
     // Carga datos de Google Sheets
-    fetch('https://sheetdb.io/api/v1/9c1zjw7nci6sj')
+    fetch('https://sheetdb.io/api/v1/6nb00d7g8b3al')
         .then(response => response.json())
         .then(data => {
 
