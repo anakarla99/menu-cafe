@@ -10,7 +10,7 @@ $(document).ready(function() {
     //    $(target).fadeIn();
     //});
 
-    let groupedData = {};
+    window.groupedData = {};
 
     // Carga datos de Google Sheets
     fetch('https://sheet2api.com/v1/0jFw5uLYRFqW/menu-cafe-enlace-db')
@@ -88,4 +88,13 @@ $(document).ready(function() {
             $('.menu-sidebar').removeClass('open');
         }
     });
+    // === NUEVO CÓDIGO ===
+    // Exponer los datos para que el script de impresión pueda acceder a ellos
+    window.getMenuDataForPrint = function() {
+        return groupedData;
+    };
+    
+    // Notificar que los datos están cargados
+    window.menuDataLoaded = true;
+    // ====================
 });

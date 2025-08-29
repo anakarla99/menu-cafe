@@ -1,56 +1,292 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Menú Enlace</title>
-<meta charset="utf-8" />
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="stylesheet" href="https://use.typekit.net/fmq1kkq.css">
-<link rel="stylesheet" href="styles/main.css">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Menú Enlace</title>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://use.typekit.net/fmq1kkq.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+
+    <!-- Agregar estas bibliotecas para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Estilos para la impresión automática -->
+    <style>
+        /* Estilos específicos para impresión */
+        @media print {
+            /* Ocultar todos los elementos normales */
+            
+                body > *:not(#printContainer) {
+                display: none !important;
+            }
+            #printContainer {
+                display: block !important;
+            }
+            /* Centrar portada */
+            .print-cover {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 90vh;
+                page-break-after: always;
+            }
+            .print-cover__image {
+                max-width: 60vw;
+                max-height: 60vh;
+                margin: auto;
+                display: block;
+            }
+            /* Centrar los items del menú */
+            .print-content .menu-list-item {
+                text-align: center !important;
+                justify-content: center !important;
+                align-items: center !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            .print-content .menu-list-item .header-item {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 0.3em;
+                width: 40%;
+                text-align: center;
+            }
+            .print-content .menu-list-item .menu-list-item__title,
+            .print-content .menu-list-item .menu-list-item__price {
+                display: inline-block !important;
+                margin: 0 !important;
+                text-align: center !important;
+            }
+            .print-content .menu-list-item .content {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 0.2em;
+                width: 100%;
+            }
+        }
+
+        /* Estilo para ocultar la versión imprimible */
+        .print-version {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-    <div class="header__container">
-        <button class="menu-toggle" aria-label="Abrir menú">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <h1 class="header__title">Menú Enlace</h1>
-    </div>
-</header>
-
-<section class="menu layout">
-    <aside class="menu-sidebar">
-        <ul class="menu-nav"></ul>
-    </aside>
-    <main class="menu-content">
-        <div class="menu-title-container">
-            <div class="title-line left-line"></div>
-            <h2 class="menu-title"></h2>
-            <div class="title-line right-line"></div>
+    <header class="header">
+        <div class="header__container">
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="header__title">Menú Enlace</h1>
         </div>
-        <div class="menu-items"></div>
-    </main>
-</section>
+    </header>
 
+    <section class="menu layout">
+        <aside class="menu-sidebar">
+            <ul class="menu-nav"></ul>
+        </aside>
+        <main class="menu-content">
+            <div class="menu-title-container">
+                <div class="title-line left-line"></div>
+                <h2 class="menu-title"></h2>
+                <div class="title-line right-line"></div>
+            </div>
+            <div class="menu-items"></div>
+        </main>
+    </section>
 
-<!--JS Files-->
-<script src="js-menu/jquery-3.7.1.min.js"></script>
-<script src="js-menu/menu.js"></script>
-
-<!-- Texto de advertencia de precios encima del footer -->
+    <!-- Texto de advertencia de precios encima del footer -->
     <div class="price-disclaimer-container">
         <p class="price-disclaimer">Los precios pueden ajustarse según la variación en el costo de materias primas</p>
     </div>
 
-<footer class="footer">
-    <div class="footer__container"> 
-        <img src="styles/img/id2try.svg" alt="Identidad" class="footer__image">
+    <footer class="footer">
+        <div class="footer__container"> 
+            <img src="styles/img/id2try.svg" alt="Identidad" class="footer__image">
+        </div>
+    </footer>
+
+    <!-- Contenedor oculto para el contenido completo de impresión -->
+    <div class="print-container" id="printContainer">
+        <!-- Aquí se clonará todo el contenido cuando sea necesario -->
     </div>
-</footer>
 
+    <!--JS Files-->
+    <script src="js-menu/jquery-3.7.1.min.js"></script>
+    <script src="js-menu/menu.js"></script>
 
+    <!-- Script para manejar la impresión automática -->
+    <script>
+        // Esperar a que se carguen las bibliotecas
+        window.jsPDF = window.jspdf.jsPDF;
+        
+        // Función para obtener datos del menú desde menu.js
+        function getMenuData() {
+            if (typeof window.getMenuDataForPrint === 'function') {
+                return window.getMenuDataForPrint();
+            }
+            return {};
+        }
+        
+        // Función para preparar el contenido de impresión
+        function preparePrintContent() {
+            const printContainer = document.getElementById('printContainer');
+            printContainer.innerHTML = '';
+            
+            // Obtener datos del menú
+            const menuData = getMenuData();
+            
+            // Verificar si hay datos
+            if (Object.keys(menuData).length === 0) {
+                printContainer.innerHTML = '<div class="print-content"><p>No hay datos del menú disponibles. Por favor, espere a que se cargue el menú.</p></div>';
+                return;
+            }
+            
+            // Crear contenedor principal
+            const printContent = document.createElement('div');
+            printContent.className = 'print-content';
+
+             // --- NUEVO: Imagen centrada en la primera página ---
+            const portada = document.createElement('div');
+            portada.className = 'print-cover';
+            portada.innerHTML = `
+                <img src="styles/img/id2try.svg" alt="Identidad" class="print-cover__image">
+            `;
+            printContent.appendChild(portada);
+            
+            // Clonar el encabezado
+            const headerClone = document.querySelector('.header').cloneNode(true);
+            // Limpiar estilos que podrían interferir
+            const menuToggle = headerClone.querySelector('.menu-toggle');
+            if (menuToggle) menuToggle.remove();
+            printContent.appendChild(headerClone);
+            
+            // Crear contenedor para todas las categorías
+            const allCategoriesContainer = document.createElement('div');
+            allCategoriesContainer.className = 'all-categories';
+            
+            // Obtener todas las categorías
+            const categories = Object.keys(menuData);
+            
+            // Generar HTML para cada categoría
+            categories.forEach(category => {
+                const categorySection = document.createElement('div');
+                categorySection.className = 'menu-category print-category';
+                
+                // Título de la categoría
+                const titleContainer = document.querySelector('.menu-title-container').cloneNode(true);
+                const title = titleContainer.querySelector('.menu-title');
+                title.textContent = category;
+                categorySection.appendChild(titleContainer);
+                
+                // Items de la categoría
+                const itemsContainer = document.createElement('div');
+                itemsContainer.className = 'menu-items';
+                
+                // Agregar cada item
+                menuData[category].forEach(item => {
+                    const itemHTML = `
+                        <div class="menu-list-item">
+                            <div class="header-item">
+                                <h4 class="menu-list-item__title">${item.title || ''}</h4>
+                                <span class="menu-list-item__price">${item.price ? item.price + ' CUP' : ''}</span>
+                            </div
+                            <div class="content">
+                                <span class="menu-list-item__desc">${item.desc || ''}</span>
+                            </div>
+                        </div>
+                    `;
+                    itemsContainer.innerHTML += itemHTML;
+                });
+                
+                categorySection.appendChild(itemsContainer);
+                allCategoriesContainer.appendChild(categorySection);
+            });
+            
+            printContent.appendChild(allCategoriesContainer);
+            
+            // Clonar el disclaimer de precios
+            const disclaimerClone = document.querySelector('.price-disclaimer-container').cloneNode(true);
+            printContent.appendChild(disclaimerClone);
+            
+            // Clonar el footer
+            const footerClone = document.querySelector('.footer').cloneNode(true);
+            printContent.appendChild(footerClone);
+            
+            printContainer.appendChild(printContent);
+        }
+        
+        // Función para generar PDF
+        function generatePDF() {
+            // Obtener datos del menú
+            const menuData = getMenuData();
+            
+            // Verificar si los datos están cargados
+            if (Object.keys(menuData).length === 0) {
+                alert('El menú aún se está cargando. Por favor, espere un momento y vuelva a intentarlo.');
+                return;
+            }
+            
+            preparePrintContent();
+            
+            const element = document.getElementById('printContainer');
+            
+            // Pequeña pausa para asegurar que el DOM se actualizó
+            setTimeout(() => {
+                html2canvas(element, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#ffffff'
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const imgWidth = 210;
+                    const pageHeight = 297;
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    let heightLeft = imgHeight;
+                    let position = 0;
+                    
+                    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                    
+                    // Añadir páginas adicionales si el contenido es muy largo
+                    while (heightLeft >= 0) {
+                        position = heightLeft - imgHeight;
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pageHeight;
+                    }
+                    
+                    // Descargar el PDF
+                    pdf.save('menu-enlace-completo.pdf');
+                    
+                    // Limpiar el contenedor de impresión
+                    element.innerHTML = '';
+                }).catch(error => {
+                    console.error("Error generating PDF:", error);
+                    alert('Error al generar el PDF. Por favor, intente nuevamente.');
+                });
+            }, 100);
+        }
+        
+        // Manejar la impresión con Ctrl+P
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                generatePDF();
+            }
+        });
+    </script>
 </body>
 </html>
+
