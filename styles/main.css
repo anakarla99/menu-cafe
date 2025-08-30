@@ -217,7 +217,7 @@
 .menu-list-item__dots::before {
     display: block;
     overflow: hidden;
-    content: "___________________________ _";
+    content: "___________________________";
     height: 2em;
     padding: 0 6px;
     word-break: break-word;

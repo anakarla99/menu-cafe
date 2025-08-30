@@ -19,12 +19,20 @@
         @media print {
             /* Ocultar todos los elementos normales */
             
-                body > *:not(#printContainer) {
+            body > *:not(#printContainer) {
                 display: none !important;
+            }@page {
+                size: A4;
+                margin: 10;
+            }
+            html, body {
+                background: rgb(237, 238, 245) !important;
             }
             #printContainer {
                 display: block !important;
+                background: rgb(237, 238, 245);
             }
+            
             /* Centrar portada */
             .print-cover {
                 display: flex;
@@ -35,41 +43,62 @@
             }
             .print-cover__image {
                 max-width: 60vw;
+
                 max-height: 60vh;
                 margin: auto;
                 display: block;
             }
+            
             /* Centrar los items del menú */
             .print-content .menu-list-item {
-                text-align: center !important;
-                justify-content: center !important;
-                align-items: center !important;
-                display: flex !important;
-                flex-direction: column !important;
+                display: block !important;
+                text-align: left !important;
+                justify-content: initial !important;
+                align-items: initial !important;
+                flex-direction: initial !important;
+                margin-left: 10mm;
+                margin-right: 10mm;
+                margin-top: 5mm;
+                margin-bottom: 5mm;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
+        
             .print-content .menu-list-item .header-item {
                 display: flex !important;
                 flex-direction: row !important;
-                justify-content: center !important;
+                justify-content: space-between !important;
                 align-items: center !important;
-                gap: 0.3em;
-                width: 40%;
-                text-align: center;
+                width: 100%;
+                text-align: left;
+                gap: 0;
             }
-            .print-content .menu-list-item .menu-list-item__title,
-            .print-content .menu-list-item .menu-list-item__price {
-                display: inline-block !important;
-                margin: 0 !important;
-                text-align: center !important;
+            .print-content .menu-list-item__dots {
+                flex: 1 1 auto;
+                height: 1em;
+                margin: 0 0.5em;
+                min-width: 1em;
             }
+        
             .print-content .menu-list-item .content {
                 display: flex !important;
-                flex-direction: column !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
                 align-items: center !important;
-                justify-content: center !important;
-                gap: 0.2em;
                 width: 100%;
+                text-align: left !important;
+                gap: 0.5em;
             }
+            .print-content .menu-list-item__desc,
+            .print-content .menu-list-item__dots,
+            .print-content .menu-list-item__price {
+                display: inline-block !important;
+                margin: 0 !important;
+                text-align: left !important;
+                min-width: 0;
+                white-space: pre-line;
+            }
+            
         }
 
         /* Estilo para ocultar la versión imprimible */
@@ -172,7 +201,7 @@
             
             // Crear contenedor para todas las categorías
             const allCategoriesContainer = document.createElement('div');
-            allCategoriesContainer.className = 'all-categories';
+            allCategoriesContainer.className = 'all-categories print-menu-area';
             
             // Obtener todas las categorías
             const categories = Object.keys(menuData);
@@ -198,10 +227,11 @@
                         <div class="menu-list-item">
                             <div class="header-item">
                                 <h4 class="menu-list-item__title">${item.title || ''}</h4>
-                                <span class="menu-list-item__price">${item.price ? item.price + ' CUP' : ''}</span>
                             </div
                             <div class="content">
                                 <span class="menu-list-item__desc">${item.desc || ''}</span>
+                                <span class="menu-list-item__dots"></span>
+                                <span class="menu-list-item__price">${item.price ? item.price + ' CUP' : ''}</span>
                             </div>
                         </div>
                     `;
@@ -252,23 +282,30 @@
                     const pdf = new jsPDF('p', 'mm', 'a4');
                     const imgWidth = 210;
                     const pageHeight = 297;
+
+                    // Márgenes en mm
+                    const marginTop = 20;
+                    const marginBottom = 20;
+                    const usableHeight = pageHeight - marginTop - marginBottom;
+
                     const imgHeight = canvas.height * imgWidth / canvas.width;
                     let heightLeft = imgHeight;
                     let position = 0;
                     
                     pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
+                    heightLeft -= usableHeight;
                     
                     // Añadir páginas adicionales si el contenido es muy largo
                     while (heightLeft >= 0) {
                         position = heightLeft - imgHeight;
                         pdf.addPage();
+                        position = marginTop - (imgHeight - heightLeft)
                         pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-                        heightLeft -= pageHeight;
+                        heightLeft -= usableHeight;
                     }
                     
                     // Descargar el PDF
-                    pdf.save('menu-enlace-completo.pdf');
+                    //pdf.save('menu-enlace-completo.pdf');
                     
                     // Limpiar el contenedor de impresión
                     element.innerHTML = '';
@@ -283,7 +320,16 @@
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && e.key === 'p') {
                 e.preventDefault();
-                generatePDF();
+                //generatePDF();
+                const menuData = getMenuData();
+            
+                // Verificar si los datos están cargados
+                if (Object.keys(menuData).length === 0) {
+                    alert('El menú aún se está cargando. Por favor, espere un momento y vuelva a intentarlo.');
+                    return;
+                }
+
+                preparePrintContent();
             }
         });
     </script>
