@@ -330,6 +330,11 @@
                 }
 
                 preparePrintContent();
+
+                // Espera un poco para que el DOM se actualice antes de imprimir
+                setTimeout(() => {
+                    window.print();
+                }, 100);
             }
         });
     </script>
