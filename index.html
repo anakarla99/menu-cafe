@@ -30,7 +30,7 @@
             }
             #printContainer {
                 display: block !important;
-                background: rgb(237, 238, 245);
+                background: rgb(237, 238, 245)!important;
             }
             
             /* Centrar portada */
@@ -245,11 +245,25 @@
                 categorySection.className = 'menu-category print-category';
                 
                 // Título de la categoría
-                const titleContainer = document.querySelector('.menu-title-container').cloneNode(true);
-                const title = titleContainer.querySelector('.menu-title');
+                const titleContainer = document.createElement('div');
+                titleContainer.className = 'menu-title-container';
+
+                const leftLine = document.createElement('div');
+                leftLine.className = 'title-line left-line';
+
+                const title = document.createElement('h2');
+                title.className = 'menu-title';
                 title.textContent = category;
+
+                const rightLine = document.createElement('div');
+                rightLine.className = 'title-line right-line';
+
+                titleContainer.appendChild(leftLine);
+                titleContainer.appendChild(title);
+                titleContainer.appendChild(rightLine);
+
                 categorySection.appendChild(titleContainer);
-                
+
                 // Items de la categoría
                 const itemsContainer = document.createElement('div');
                 itemsContainer.className = 'menu-items';
