@@ -98,6 +98,38 @@
                 min-width: 0;
                 white-space: pre-line;
             }
+            .title-line {
+                display: inline-block;
+                flex-grow: 1;
+                height: 2px;
+                background-color: rgba(17, 30, 108);
+                margin: 0 1rem;
+                position: relative;
+                min-width: 40px;
+            }
+
+            .title-line::after {
+                display: inline-block;
+                content: '';
+                position: absolute;
+                top: 4px;
+                /* Espacio entre las dos líneas */
+                left: 0;
+                right: 0;
+                height: 4px;
+                /* Línea inferior más gruesa */
+                background-color: rgba(17, 30, 108);
+            }
+            .header {
+                background-image: url('styles/img/pattern2.svg') !important;
+                background-size: cover !important;
+                background-color: rgb(237, 238, 245) !important;
+            }
+            .footer {
+                background-image: url('styles/img/pattern2.svg') !important;
+                background-size: cover !important;
+                background-color: rgb(237, 238, 245) !important;
+            }
             
         }
 
