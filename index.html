@@ -32,7 +32,35 @@
                 display: block !important;
                 background: rgb(237, 238, 245)!important;
             }
-            
+            .print-menu-area {
+                column-count: 2;
+                column-gap: 10mm;
+                /* Opcional: para evitar que una categoría se parta entre columnas */
+                break-inside: avoid;
+                /* Asegura que las categorías no se corten entre columnas */
+                page-break-inside: avoid;
+            }
+            .print-category {
+                margin-bottom: 5mm;
+                /* Opcional: agrega espacio entre categorías */
+            }
+            /* Evita que el header se separe de su contenido */
+            .print-content > .header,
+            .print-content > .footer,
+            .print-cover,
+            .price-disclaimer-container {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .print-content > .header {
+                break-after: avoid-page;
+                page-break-after: avoid;
+            }
+            /* Si agrupas header y menú: */
+            .print-header-group {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
             /* Centrar portada */
             .print-cover {
                 display: flex;
@@ -58,8 +86,8 @@
                 flex-direction: initial !important;
                 margin-left: 10mm;
                 margin-right: 10mm;
-                margin-top: 5mm;
-                margin-bottom: 5mm;
+                margin-top: 2mm;
+                margin-bottom: 2mm;
                 page-break-inside: avoid;
                 break-inside: avoid;
             }
@@ -71,7 +99,7 @@
                 align-items: center !important;
                 width: 100%;
                 text-align: left;
-                gap: 0;
+                gap: 1em;
             }
             .print-content .menu-list-item__dots {
                 flex: 1 1 auto;
@@ -225,12 +253,13 @@
             `;
             printContent.appendChild(portada);
             
-            // Clonar el encabezado
-            const headerClone = document.querySelector('.header').cloneNode(true);
-            // Limpiar estilos que podrían interferir
-            const menuToggle = headerClone.querySelector('.menu-toggle');
-            if (menuToggle) menuToggle.remove();
-            printContent.appendChild(headerClone);
+            //// Clonar el encabezado
+            //const headerClone = document.querySelector('.header').cloneNode(true);
+            //// Limpiar estilos que podrían interferir
+            //const menuToggle = headerClone.querySelector('.menu-toggle');
+            //if (menuToggle) menuToggle.remove();
+            //printContent.appendChild(headerClone);
+
             
             // Crear contenedor para todas las categorías
             const allCategoriesContainer = document.createElement('div');
@@ -269,15 +298,16 @@
                 itemsContainer.className = 'menu-items';
                 
                 // Agregar cada item
+                //<div class="content">
+                            //    <span class="menu-list-item__desc">${item.desc || ''}</span>
+                            //    <span class="menu-list-item__dots"></span>
+                            //    <span class="menu-list-item__price">${item.price ? item.price + ' CUP' : ''}</span>
+                            //</div>
                 menuData[category].forEach(item => {
                     const itemHTML = `
                         <div class="menu-list-item">
                             <div class="header-item">
                                 <h4 class="menu-list-item__title">${item.title || ''}</h4>
-                            </div
-                            <div class="content">
-                                <span class="menu-list-item__desc">${item.desc || ''}</span>
-                                <span class="menu-list-item__dots"></span>
                                 <span class="menu-list-item__price">${item.price ? item.price + ' CUP' : ''}</span>
                             </div>
                         </div>
@@ -290,6 +320,13 @@
             });
             
             printContent.appendChild(allCategoriesContainer);
+
+
+            //const headerGroup = document.createElement('div');
+            //headerGroup.className = 'print-header-group';
+            //headerGroup.appendChild(headerClone);
+            //headerGroup.appendChild(allCategoriesContainer);
+            //printContent.appendChild(headerGroup);
             
             // Clonar el disclaimer de precios
             const disclaimerClone = document.querySelector('.price-disclaimer-container').cloneNode(true);
